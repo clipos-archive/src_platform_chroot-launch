@@ -1,0 +1,92 @@
+# ChangeLog for <app-clip>/<chroot-launch>
+
+  11 Sep 2014; Yves-Alexis Perez <clipos@ssi.gouv.fr>
+  chroot-launch-1.1.2-r1.ebuild:
+  Add amd64 keyword, masked for now.
+
+  17 Apr 2009; Vincent Strubel <clipos@ssi.gouv.fr>
+  chroot-launch-1.1.2-r1.ebuild:
+  Switch to verictl2.eclass.
+
+*chroot-launch-1.1.2-r1 (16 Jul 2008)
+
+  16 Jul 2008; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.2-r1.ebuild, -chroot-launch-1.1.2.ebuild:
+  Switch to CCSD veriexec hashes.
+
+*chroot-launch-1.1.2 (11 Jul 2008)
+
+  11 Jul 2008; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.2.ebuild, -chroot-launch-1.1.1-r4.ebuild:
+  Check for '..' in path. Revoke all caps explicitly.
+
+  07 Nov 2007; Vincent Strubel <clipos@ssi.gouv.fr>
+  Remove all ebuilds before 1.1.1-r4.
+
+*chroot-launch-1.1.1-r4 (10 Jul 2007)
+
+  10 Jul 2007; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.1-r4.ebuild:
+  Add IUSE core-deps, removes the dependency on clip-lib.
+  Remove IUSE clip-lsm.
+  
+*chroot-launch-1.1.1-r3 (05 Mar 2007)
+
+  05 Mar 2007; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.1-r3.ebuild:
+  Seems like passing --disable-static to my configure script actually
+  enables static just as much as --enable-static. Fixing this by not 
+  passing anything until I find the time to look into it.
+
+*chroot-launch-1.1.1-r2 (18 Jan 2007)
+
+  18 Jan 2007; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.1-r2.ebuild:
+  Add verictl support : give CAP_SETUID|CAP_SYS_CHROOT to viewer-launch
+  as a forced effective capset (Note : build system should take care of
+  setting VERIEXEC_CTX).
+  
+*chroot-launch-1.1.1-r1 (09 Nov 2006)
+
+  09 Nov 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.1-r1.ebuild:
+  Fix default prefix: / -> /usr.
+ 
+*chroot-launch-1.1.1 (21 Sep 2006)
+
+  21 Sep 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.1.ebuild:
+  Add a user-launch utility that launches processes in /user. This
+  one automatically supports chrooting as root, which viewer-launch
+  only does when built with USE=clip-devel.
+
+*chroot-launch-1.1.0 (28 Aug 2006)
+
+  28 Aug 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.1.0.ebuild:
+  Version bump. We now generate a 'viewer-launch' binary that has
+  part of the chroot path hardcoded in it (in this case '/viewers'),
+  rather than the generic (and probably more exploitable) chroot-launch.
+
+  24 Apr 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  chroot-launch-1.0.1.ebuild:
+  USE flag consistency : clip_devel -> clip-devel
+
+*chroot-launch-1.0.1 (24 apr 2006)
+
+  24 Apr 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.0.1.ebuild:
+  Version bump : clear environment after chroot, since we don't
+  need it.
+
+*chroot-launch-1.0-r1 (20 apr 2006)
+
+  20 Apr 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.0-r1.ebuild:
+  Clean up open files before launch.
+  
+*chroot-launch-1.0 (05 apr 2006)
+
+  05 Apr 2006; Vincent Strubel <clipos@ssi.gouv.fr>
+  +chroot-launch-1.0.ebuild:
+  Initial import.

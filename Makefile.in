@@ -1,0 +1,74 @@
+SHELL = @SHELL@
+srcdir = @srcdir@
+VPATH = @srcdir@
+CC = @CC@
+CFLAGS = @CFLAGS@
+LDFLAGS = @LDFLAGS@
+PREFIX = @prefix@
+STATIC = @static@
+CHROOT_ALLOW_ROOT = @chroot_allow_root@
+CHROOT_CLEAN_EXEC = @chroot_clean_exec@
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+PKG_CONFIG = @PKG_CONFIG@
+
+EXES = viewer-launch user-launch
+SRC = chroot-launch.c
+OBJECTS = ${foreach file, ${EXES}, ${file}.o}
+
+
+ifeq (${STATIC},y)
+CFLAGS += -DCHROOT_LAUNCH_STATIC
+LDFLAGS += -static
+endif
+
+ifeq (${CHROOT_ALLOW_ROOT}, y)
+CFLAGS += -DCHROOT_ALLOW_ROOT
+endif
+
+ifeq (${CHROOT_CLEAN_EXEC}, y)
+CFLAGS += -DCHROOT_CLEAN_EXEC
+endif
+
+
+.PHONY: all install clean mrproper 
+
+all: ${EXES}
+
+viewer-launch.o: ${SRC} Makefile
+	${CC} ${CFLAGS} -c -o $@ $< -DBASE_DIR="/viewers" 
+
+user-launch.o: ${SRC} Makefile
+	${CC} ${CFLAGS} -c -o $@ $< -DBASE_DIR="/user" -DCHROOT_ALLOW_ROOT 
+
+viewer-launch: viewer-launch.o
+	${CC} -o $@ $< ${LDFLAGS}
+
+user-launch: user-launch.o
+	${CC} -o $@ $< ${LDFLAGS}
+
+install: ${EXES}
+	@for prog in ${EXES}; do \
+		echo "install -D $${prog} ${DESTDIR}${PREFIX}/bin/$${prog}"; \
+		install -D $${prog} ${DESTDIR}${PREFIX}/bin/$${prog}; \
+	done
+
+clean:
+	rm -f ${EXES} ${OBJECTS}
+
+mrproper: clean
+	rm -f config.log Makefile config.status 
+	rm -fr autom4te.cache
+
+depend:
+	makedepend -- ${CFLAGS} -- ${SRCS}
+
+Makefile: Makefile.in config.status
+	./config.status
+
+config.status: configure
+	$(srcdir)/configure 
+
+configure: configure.in
+	cd $(srcdir) && autoconf
